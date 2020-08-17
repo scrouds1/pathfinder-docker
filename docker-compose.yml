@@ -8,7 +8,7 @@ services:
     expose:
       - 9000
     volumes:
-      - pathfinder-data:/var/www/html
+      - ./pathfinder-data:/var/www/html
       - ./pathfinder-config/environment.ini:/var/www/html/app/environment.ini
       - ./pathfinder-config/config.ini:/var/www/html/app/config.ini
       - ./pathfinder-config/pathfinder.ini:/var/www/html/app/pathfinder.ini
@@ -22,7 +22,7 @@ services:
       - 8030
       - 5555
     volumes:
-      - pathfinder-data:/var/www/html
+      - ./pathfinder-data:/var/www/html
 
   web:
     image: nginx:1.15.9-alpine
@@ -34,7 +34,7 @@ services:
       LETSENCRYPT_HOST: pathfinder.thefed.xyz
       LETSENCRYPT_EMAIL: pathfinder@dont.ltd
     volumes:
-      - pathfinder-data:/var/www/html
+      - ./pathfinder-data:/var/www/html
       - ./pathfinder-config/nginx-pathfinder.conf:/etc/nginx/conf.d/default.conf:ro
       - ./pathfinder-config/nginx.conf:/etc/nginx/nginx.conf:ro
 
@@ -59,7 +59,7 @@ services:
       MYSQL_USER: mariadb-pathfinder
       MYSQL_PASSWORD: mariadb-pathfinder
     volumes:
-      - pathfinder-db:/var/lib/mysql
+      - ./pathfinder-db:/var/lib/mysql
 
   mariadb-eve:
     image: mariadb:10.4
@@ -73,7 +73,7 @@ services:
       MYSQL_USER: mariadb-eve
       MYSQL_PASSWORD: mariadb-eve
     volumes:
-      - eve-db:/var/lib/mysql
+      - ./eve-db:/var/lib/mysql
 
 networks:
   default:
