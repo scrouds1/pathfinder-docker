@@ -17,9 +17,10 @@ RUN { \
     echo 'max_input_vars = 5000'; \
     echo 'html_errors = 0'; \
 } >> /usr/local/etc/php/conf.d/pathfinder-app.ini
+VOLUME /var/www/html
 WORKDIR /var/www/html
 RUN git clone https://github.com/exodus4d/pathfinder.git . \
 && composer install \
 && rm -f /var/www/html/app/environment.ini /var/www/html/app/config.ini /var/www/html/app/pathfinder.ini /var/www/html/app/routes.ini \
 && chmod 777 -R /var/www/html
-VOLUME /var/www/html
+
