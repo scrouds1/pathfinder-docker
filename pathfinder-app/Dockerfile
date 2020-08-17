@@ -1,5 +1,4 @@
-FROM php:7.2-fpm
-COPY --from=composer /usr/bin/composer /usr/bin/composer
+FROM 7.2-fpm-alpine
 RUN apt-get update &&  apt-get install -y libjpeg62-turbo-dev libpng-dev libzmq5 libzmq3-dev git unzip zlib1g-dev libevent-dev libssl-dev \
 && docker-php-ext-install sockets \
 && pecl channel-update pecl.php.net \
@@ -11,16 +10,12 @@ RUN apt-get update &&  apt-get install -y libjpeg62-turbo-dev libpng-dev libzmq5
 && docker-php-ext-enable redis \
 && docker-php-ext-configure gd \
 && docker-php-ext-install -j$(nproc) gd pdo_mysql
-RUN { \
-    echo 'session.save_handler = redis'; \
-    echo 'session.save_path = tcp://redis:6379'; \
-    echo 'max_input_vars = 5000'; \
-    echo 'html_errors = 0'; \
-} >> /usr/local/etc/php/conf.d/pathfinder-app.ini
-VOLUME /var/www/html
+WORKDIR ~
+run curl -sS https://getcomposer.org/installer -o composer-setup.php && php composer-setup.php --install-dir=/usr/local/bin --filename=composer
 WORKDIR /var/www/html
-RUN git clone https://github.com/exodus4d/pathfinder.git . \
-&& composer install \
-&& rm -f /var/www/html/app/environment.ini /var/www/html/app/config.ini /var/www/html/app/pathfinder.ini /var/www/html/app/routes.ini \
-&& chmod 777 -R /var/www/html
+RUN git clone https://github.com/exodus4d/pathfinder.git
+WORKDIR /var/www/html/pathfinder
+RUN composer install
+WORKDIR /var/www/html
+RUN chmod 777 -R /var/www/html
 
