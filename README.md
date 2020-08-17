@@ -1,7 +1,7 @@
 ## Setup:
 Clone the repo:
 ```
-git clone https://github.com/wipash/pathfinder-docker.git
+git clone https://github.com/scrouds1/pathfinder-docker.git
 cd pathfinder-docker
 ```
 
