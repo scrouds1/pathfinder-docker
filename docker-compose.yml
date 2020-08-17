@@ -30,7 +30,7 @@ services:
     restart: always
     container_name: pathfinder-nginx
     expose:
-      - 8045:80
+      - 80
     environment:
       VIRTUAL_HOST: pathfinder.skupper.com
       LETSENCRYPT_HOST: pathfinder.skupper.com
