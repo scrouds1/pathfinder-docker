@@ -1,4 +1,4 @@
-FROM 7.2-fpm-alpine
+FROM php:7.2-fpm
 RUN apt-get update &&  apt-get install -y libjpeg62-turbo-dev libpng-dev libzmq5 libzmq3-dev git unzip zlib1g-dev libevent-dev libssl-dev \
 && docker-php-ext-install sockets \
 && pecl channel-update pecl.php.net \
