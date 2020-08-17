@@ -4,6 +4,7 @@ services:
   pathfinder-app:
     build:
       context: ./pathfinder-app
+    container_name: pathfinder
     restart: always
     expose:
       - 9000
@@ -27,12 +28,13 @@ services:
   web:
     image: nginx:1.15.9-alpine
     restart: always
+    container_name: pathfinder-nginx
     expose:
-      - 80
+      - 8045:80
     environment:
-      VIRTUAL_HOST: pathfinder.thefed.xyz
-      LETSENCRYPT_HOST: pathfinder.thefed.xyz
-      LETSENCRYPT_EMAIL: pathfinder@dont.ltd
+      VIRTUAL_HOST: pathfinder.skupper.com
+      LETSENCRYPT_HOST: pathfinder.skupper.com
+      LETSENCRYPT_EMAIL: pathfindertest@scrouds.com
     volumes:
       - ./pathfinder-data:/var/www/html
       - ./pathfinder-config/nginx-pathfinder.conf:/etc/nginx/conf.d/default.conf:ro
@@ -74,13 +76,3 @@ services:
       MYSQL_PASSWORD: mariadb-eve
     volumes:
       - ./eve-db:/var/lib/mysql
-
-networks:
-  default:
-    external:
-      name: nginx-proxy
-
-volumes:
-  pathfinder-data:
-  pathfinder-db:
-  eve-db:
